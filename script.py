@@ -1,8 +1,5 @@
 import requests
 
-first_api_key = ""
-second_api_key = ""
-
 
 file_id = "1499142"
 
