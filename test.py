@@ -1,3 +1,5 @@
+from api_keys import *
+
 import requests
 import csv
 
