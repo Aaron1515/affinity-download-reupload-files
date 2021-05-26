@@ -1,7 +1,7 @@
 import requests
 
-first_api_key = "OalyOEk3YNr2_NpcBcVD9662L8fTyJ8-Wrpdnzde4Eg"
-second_api_key = "OalyOEk3YNr2_NpcBcVD9662L8fTyJ8-Wrpdnzde4Eg"
+first_api_key = ""
+second_api_key = ""
 
 
 file_id = "1499142"
