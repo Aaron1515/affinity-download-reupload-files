@@ -66,5 +66,7 @@ for each_id in file_ids:
 
 	log_file.write("\n")
 
+print("Done!")
+log_file.close()
 
 
