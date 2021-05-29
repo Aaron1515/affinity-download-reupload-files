@@ -1,3 +1,2 @@
-Orginal file ID, File name, Download file status, Orginal org name, Orginal domain, Get orginal org status, New org ID, New org name, New org domain, Get new org status, Upload file status, Note on uploaded file
-1499142, [Shared] Sourcing File - Company List (6) (1).csv, 200, Emergence a, emcap.com, 200, 263172407, Emergence a, emcap.com, 200, 200, {'success': True}
-1499142, [Shared] Sourcing File - Company List (6) (1).csv, 200, Emergence a, emcap.com, 200, 263172407, Emergence a, emcap.com, 200, 200, {'success': True}
+Orginal file ID, File name, Get file info status, Orginal org name, Orginal domain, Get orginal org status, Download file status, New org ID, New org name, New org domain, Get new org status, Upload file status, Note on uploaded file
+1520374, test.png, 200, Emergence a, emcap.com, 200, 200, 263172407, Emergence a, emcap.com, 200, 200, {'success': True}
