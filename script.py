@@ -31,7 +31,10 @@ for each_id in file_ids:
 
 
 	## Get orginal org info
-	orginal_org_response = requests.get('https://api.affinity.co/organizations/' + str(old_org_id), auth=('', first_api_key))
+	orginal_org_response = search_for_org(old_org_id, first_api_key)
+	# orginal_org_response = requests.get('https://api.affinity.co/organizations/' + str(old_org_id), auth=('', first_api_key))
+	print(orginal_org_response.json())
+	break
 
 	if orginal_org_response.status_code == 200:
 
@@ -59,17 +62,23 @@ for each_id in file_ids:
 
 
 		## Find new org info on the new instance
+		# Search for org without domain
 		if old_org_domain == " ":
-			response = requests.get('https://api.affinity.co/organizations?term=' + old_org_name, auth=('', second_api_key))
+			response = search_for_org(old_org_name, second_api_key)
+			# Create org if no result is found
 			if response.json()['organizations'] == []:
-				print("No org found, no domain found.")
-				response = create_org_no_domain(old_org_name, second_api_key)
-
+				print("No org found, create org with name only.")
+				create_org_no_domain(old_org_name, second_api_key)
+				response = search_for_org(old_org_name, second_api_key)
+		# Search for go with domain
 		else:
 			response = requests.get('https://api.affinity.co/organizations?term=' + old_org_domain, auth=('', second_api_key))
+			# Create org if no result is found
 			if response.json()['organizations'] == []:
-				print("No org found, attempting to create new org.")
-				response = create_org(old_org_name, old_org_domain, second_api_key)
+				print(response.json())
+				print("No org found, create org with domain and name.")
+				create_org(old_org_name, old_org_domain, second_api_key)
+				response = search_for_org(old_org_name, second_api_key)
 
 
 		if response.status_code == 200:
@@ -77,11 +86,8 @@ for each_id in file_ids:
 			new_org_name = response.json()['organizations'][0]['name']
 			new_org_domain = response.json()['organizations'][0]['domain']
 			if not new_org_domain:
-				print("")
-			else:
-				new_org_domain = "no domain found"
-				print(new_org_domain)
-		break
+				new_org_domain = " "
+
 			# Write new org id, new org name, new org domain, and status code to log.
 			log_file.write(", " + new_org_id + ", " + new_org_name + ", " + new_org_domain + ", " + "200")
 		else:
@@ -98,8 +104,7 @@ for each_id in file_ids:
 			print("File didn't upload. Orginal file ID is " + str(each_id))
 			log_file.write(", " + str(response.status_code) + ", " + response.json()[0])
 		else:
-			print("Something went wrong with uploading the file. Orginal file ID is " + str(each_id))
-			print(response.json())
+			print("Something went wrong with uploading the file.")
 			log_file.write(", " + str(response.status_code) + ", " + response.json()[0])
 			break
 
@@ -107,8 +112,9 @@ for each_id in file_ids:
 
 	elif orginal_org_response.status_code == 422:
 		log_file.write(", " + "Unable to find org" + ", " + "Unable to find org" + ", " + str(orginal_org_response.status_code))
-		print("422 error: " + orginal_org_response.json())
-		break
+		print("422 error: Unable to find org")
+		print(orginal_org_response.json())
+		
 	else:
 		print(orginal_org_response.json())
 		break
