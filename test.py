@@ -1,43 +1,24 @@
 from api_keys import *
+from file_ids import *
+from helper import *
 
 import requests
-import csv
+import time
 
+print("hello")
+time.sleep(3)
+print("helo again")
+# a = {'organizations': [], 'next_page_token': None}
 
-file_id = "1499142"
+# test = create_org("test", "testing.com", second_api_key)
 
-response = requests.get('https://api.affinity.co/entity-files/' + file_id, auth=('', first_api_key))
-print("************** Download File ***************")
-old_org_id = str(response.json()['organization_id'])
-print(str(response.status_code) + " - download file.")
-file_name = response.json()['name']
-print(file_name)
-old_file_content = response.content
-old_file_header = response.headers['content-type']
-print("")
+# a['organizations'].append(test.json())
+# # test2 = create_org_no_domain("test", second_api_key)
 
+# print(test.status_code)
+# print(test.json())
+# print(a)
 
-print("************** GET old org info ***************")
-response = requests.get('https://api.affinity.co/organizations/' + old_org_id, auth=('', first_api_key))
-old_org_domain = response.json()['domain']
-print(str(response.status_code) + " - old org request.")
-print("")
-
-
-print("************** GET new org info ***************")
-response = requests.get('https://api.affinity.co/organizations?term=' + old_org_domain, auth=('', second_api_key))
-print(str(response.status_code) + " - new org request.")
-new_org_id = str(response.json()['organizations'][0]['id'])
-
-
-
-print("************** Upload file ***************")
-response = requests.post('https://api.affinity.co/entity-files', auth=('',second_api_key), params=({'organization_id': new_org_id}), files={'file': (file_name, old_file_content, old_file_header)})
-print(str(response.status_code) + " - upload status code.")
-print(response.json())
-
-file1 = open('log.txt', 'a')
-s = file_id + "," + old_org_domain + "," + new_org_id + "," + file_name 
-file1.write(s)
-file1.close()
+# # print(test2.status_code)
+# print(test2.json())
 
